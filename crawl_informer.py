@@ -2,7 +2,7 @@ import requests
 from lxml import html
 import feedparser
 
-from common import articles, selector_text, element_text
+from common import articles, selector_text, element_text, emit_article
 
 
 def scrape_article(url):
@@ -24,9 +24,7 @@ def scrape_article(url):
         'author': author,
         'text': selector_text(doc, '.singlepost-text')
     }
-    if not data['text']:
-        return
-    articles.upsert(data, ['url'])
+    emit_article(data)
 
 
 
